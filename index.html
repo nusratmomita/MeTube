@@ -7,6 +7,12 @@
     />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <title>MeTube</title>
+    <style>
+        .active{
+            background-color: brown;
+            color: wheat;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -18,7 +24,7 @@
                 <button class="btn">Sort by view</button>
             </div>
             <div>
-                <button class="btn">Blog</button>
+                <button class="btn bg-[#FF1F3D] text-white">Blog</button>
             </div>
         </nav>
     </header>
@@ -26,10 +32,15 @@
     <main>
         <!-- buttons -->
         <section id="category-btn" class="flex justify-center gap-3">
-            <button class="btn btn-sm">All</button>
-            <button class="btn btn-sm">Music</button>
-            <button class="btn btn-sm">Comedy</button>
-            <button class="btn btn-sm">Drawings</button>
+            <button onclick="loadVideos()" class="btn btn-md hover:bg-[#FF1F3D] hover:text-white">All</button>
+        </section>
+
+        <section class="w-11/12 mx-auto grid grid-cols-4 gap-5" id="video-container">
+
+            <div class="py-28 col-span-4 flex flex-col justify-center items-center text-center">
+                <img class="w-[120px]" src="assets/Icon.png" alt="Icon">
+                <h1 class="text-2xl text-gray-600 font-semibold">Oops!! Sorry, There is no content here</h1>
+            </div>
         </section>
     </main>
 
