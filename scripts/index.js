@@ -17,7 +17,7 @@ function displayCategories(categories){
     for(const cat of categories){
         const categoryDiv = document.createElement("div");
         categoryDiv.innerHTML = `
-         <button id="btn-${cat.category_id}" onclick=loadCategoryVideo(${cat.category_id}) class="btn btn-md hover:bg-[#FF1F3D] hover:text-white">${cat.category}</button>
+         <button id="btn-${cat.category_id}" onclick=loadCategoryVideo(${cat.category_id}) class="btn btn-md ">${cat.category}</button>
         `
         categoryBtn.appendChild(categoryDiv)
     }
@@ -30,7 +30,22 @@ function loadVideos(){
     // console.log("loading vidoes")
     fetch("https://openapi.programming-hero.com/api/phero-tube/videos")
     .then(res => res.json())
-    .then(data => displayVideos(data.videos))
+    .then(data => {
+        removeActiveClass();
+        document.getElementById('btn-all').classList.add('active')
+        displayVideos(data.videos)
+    })
+}
+
+// removing active class for better undestanding
+function removeActiveClass(){
+    const btnActive = document.getElementsByClassName("active");
+
+    for(const btn of btnActive){
+        btn.classList.remove("active");
+    }
+
+    console.log(btnActive)
 }
 
 // category wise video displaying
@@ -43,12 +58,14 @@ const loadCategoryVideo = (id) => {
     .then(res => res.json())
     .then(data => {
         const clickedButton = document.getElementById(`btn-${id}`);
+        removeActiveClass();
         // console.log(clickedButton)
         clickedButton.classList.add("active");
         displayVideos(data.category);
     })
 }
 
+// showing 
 const displayVideos = (videos) => {
     console.log(videos)
     const videoContainer = document.getElementById('video-container');
@@ -68,22 +85,49 @@ const displayVideos = (videos) => {
 
         /*
         !! sort this later
+        !! review the code again for better understanding
         */
         const videoDiv = document.createElement('div');
         videoDiv.innerHTML = `
-        <div class="mt-12 card bg-base-100 shadow-sm">
-            <figure>
-                <img
-                src="${video.thumbnail}"
-                alt="thumbnail" />
-            </figure>
-            <div class="card-body">
-                <h2 class="card-title">${video.title}</h2>
-                <p>A card component has a figure, a body part, and inside body there are title and actions parts</p>
-                <div class="card-actions justify-end">
-                <button class="btn btn-primary">Buy Now</button>
+            <div class="card bg-base-100">
+                <figure class="relative">
+                <img class="w-full h-[150px] object-cover" src="${
+                    video.thumbnail
+                }" alt="Shoes" />
+                <span
+                    class="absolute bottom-2 right-2 text-sm rounded text-white bg-black px-2"
+                    >3hrs 56 min ago</span
+                >
+                </figure>
+
+            <div class="flex gap-3 px-0 py-5">
+                <div class="profile">
+                    <div class="avatar">
+                    <div
+                        class="ring-primary ring-offset-base-100 w-6 rounded-full ring ring-offset-2"
+                    >
+                        <img
+                        src="${video.authors[0].profile_picture}"
+                        />
+                    </div>
+                    </div>
+                </div>
+
+                <div class="intro">
+                    <h2 class="text-sm font-semibold">Midnight Serenade</h2>
+                    <p class="text-sm text-gray-400 flex gap-1">
+                        ${video.authors[0].profile_name}
+                        <img
+                        class="w-5 h-5"
+                        src="https://img.icons8.com/?size=96&id=98A4yZTt9abw&format=png"
+                        alt=""
+                    />
+                    </p>
+                    <p class="text-sm text-gray-400">${video.others.views} views</p>
                 </div>
             </div>
+
+            <button onclick=loadVideoDetails() class="btn btn-outline btn-error">View Details</button>
         </div>
         `
         videoContainer.appendChild(videoDiv)

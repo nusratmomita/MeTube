@@ -9,7 +9,7 @@
     <title>MeTube</title>
     <style>
         .active{
-            background-color: brown;
+            background-color: #a52a2a;
             color: wheat;
         }
     </style>
@@ -24,7 +24,7 @@
                 <button class="btn">Sort by view</button>
             </div>
             <div>
-                <button class="btn bg-[#FF1F3D] text-white">Blog</button>
+                <button class="btn bg-[#a52a2a] text-white">Blog</button>
             </div>
         </nav>
     </header>
@@ -32,7 +32,7 @@
     <main>
         <!-- buttons -->
         <section id="category-btn" class="flex justify-center gap-3">
-            <button onclick="loadVideos()" class="btn btn-md hover:bg-[#FF1F3D] hover:text-white">All</button>
+            <button onclick="loadVideos()" id="btn-all" class="btn btn-md">All</button>
         </section>
 
         <section class="w-11/12 mx-auto grid grid-cols-4 gap-5" id="video-container">
