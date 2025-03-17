@@ -45,7 +45,7 @@ function removeActiveClass(){
         btn.classList.remove("active");
     }
 
-    console.log(btnActive)
+    // console.log(btnActive)
 }
 
 // category wise video displaying
@@ -65,9 +65,41 @@ const loadCategoryVideo = (id) => {
     })
 }
 
-// showing 
+// showing video details when a button is clicked
+const loadVideoDetails = (videoId) => {
+    // console.log(videoId);
+    const url = `https://openapi.programming-hero.com/api/phero-tube/video/${videoId}`;
+
+    fetch(url)
+    .then(res => res.json())
+    .then(data => displayVideoDetails(data.video))
+}
+
+// displaying video details
+const displayVideoDetails = (video) => {
+    // console.log(video)
+    document.getElementById('video-details').showModal();
+    const videoContainer = document.getElementById("details-container");
+
+    videoContainer.innerHTML = `
+        <div class="card bg-base-100 image-full shadow-sm">
+            <figure>
+                <img
+                src="${video.thumbnail}"
+                alt="thumbnail" />
+            </figure>
+            <div class="card-body">
+                <h2 class="font-bold text-2xl">${video.title}</h2>
+                <p class="text-xl ">${video.description}"</p>
+                </div>
+            </div>
+        </div>
+    
+    
+    `
+}
 const displayVideos = (videos) => {
-    console.log(videos)
+    // console.log(videos)
     const videoContainer = document.getElementById('video-container');
 
     videoContainer.innerHTML = "";
@@ -89,7 +121,7 @@ const displayVideos = (videos) => {
         */
         const videoDiv = document.createElement('div');
         videoDiv.innerHTML = `
-            <div class="card bg-base-100">
+            <div class="mt-24 card bg-base-100">
                 <figure class="relative">
                 <img class="w-full h-[150px] object-cover" src="${
                     video.thumbnail
@@ -127,7 +159,7 @@ const displayVideos = (videos) => {
                 </div>
             </div>
 
-            <button onclick=loadVideoDetails() class="btn btn-outline btn-error">View Details</button>
+            <button onclick=loadVideoDetails("${video.video_id}") class="btn btn-outline btn-error">View Details</button>
         </div>
         `
         videoContainer.appendChild(videoDiv)
